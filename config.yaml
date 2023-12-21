@@ -1,0 +1,5 @@
+ignore_interfaces:
+  - IgnoreInternal
+
+ignore_funcs:
+  - IgnoreMethod

@@ -1,0 +1,2 @@
+internal/internal.go:4:0:Internal.IgnoreMethod()
+internal/internal.go:5:0:Internal.ReportMethod()

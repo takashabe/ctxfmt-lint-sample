@@ -1,0 +1,5 @@
+internal/internal.go at line 4: Internal.IgnoreMethod()
+internal/internal.go at line 5: Internal.ReportMethod()
+internal/internal.go at line 9: IgnoreInternal.Method()
+main.go at line 4: Interface.Foo()
+pkg/pkg.go at line 4: Pkg.Bar()

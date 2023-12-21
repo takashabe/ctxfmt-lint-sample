@@ -1,0 +1,25 @@
+name: reviewdog
+
+on:
+  - pull_request
+
+jobs:
+  reviewdog:
+    name: reviewdog
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code.
+        uses: actions/checkout@v4
+      - name: setup reviewdog
+        uses: reviewdog/action-setup@v1
+      - name: ctxfmt
+        env:
+          CI_PULL_REQUEST: ${{ github.event.pull_request.number }}
+          CI_COMMIT: ${{ github.sha }}
+          CI_REPO_OWNER: ${{ github.repository_owner }}
+          CI_REPO_NAME: ${{ github.event.repository.name }}
+          CI_BRANCH: ${{ github.head_ref }}
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.REVIEWDOG_TOKEN }}
+        run: |
+          shopt -s globstar
+          go run github.com/takashabe/ctxfmt@v0.0.4 def --dryrun ./** | reviewdog -name=ctxfmt -efm="%f at line %l: %m" -reporter=github-pr-review

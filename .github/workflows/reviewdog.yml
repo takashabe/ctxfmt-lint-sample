@@ -26,4 +26,5 @@ jobs:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           shopt -s globstar
-          go run github.com/takashabe/ctxfmt@v0.0.4 def --dryrun ./** | reviewdog -name=ctxfmt -efm="%f at line %l: %m" -reporter=github-pr-review
+          # go run github.com/takashabe/ctxfmt@v0.0.4 def --dryrun ./** | reviewdog -name=ctxfmt -efm="%f at line %l: %m" -reporter=github-pr-review
+          cat output.txt | reviewdog -name=ctxfmt -efm="%f at line %l: %m" -reporter=github-pr-review

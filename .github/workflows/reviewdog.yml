@@ -12,6 +12,10 @@ jobs:
         uses: actions/checkout@v4
       - name: setup reviewdog
         uses: reviewdog/action-setup@v1
+      - name: setup go
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: "go.mod"
       - name: ctxfmt
         env:
           CI_PULL_REQUEST: ${{ github.event.pull_request.number }}
@@ -19,7 +23,7 @@ jobs:
           CI_REPO_OWNER: ${{ github.repository_owner }}
           CI_REPO_NAME: ${{ github.event.repository.name }}
           CI_BRANCH: ${{ github.head_ref }}
-          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.REVIEWDOG_TOKEN }}
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           shopt -s globstar
-          go run github.com/takashabe/ctxfmt@v0.0.4 def --dryrun ./** | reviewdog -name=ctxfmt -efm="%f at line %l: %m" -reporter=github-pr-review
+          go run github.com/takashabe/ctxfmt@v0.0.6 def --dryrun ./** | reviewdog -name=ctxfmt -efm="%f:%l:%c: %m" -reporter=github-pr-check
